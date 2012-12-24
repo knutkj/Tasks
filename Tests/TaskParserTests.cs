@@ -43,30 +43,23 @@ namespace Tests
         {
             // Arrange.
             var task = "task";
+            var tokens = Tuple.Create<string>("status");
+            var expectedStatus = TaskStatus.Done;
+
             var parser = MockRepository.GeneratePartialMock<TaskParser>();
             parser
-                .Expect(p => p.IsSerializedTask(task))
-                .Return(true);
+                .Expect(p => p.GetTokens(task))
+                .Return(tokens);
+            parser
+                .Expect(p => p.ParseStatus(tokens.Item1))
+                .Return(expectedStatus);
 
             // Act.
             var res = parser.Parse(task);
 
             // Assert.
             parser.VerifyAllExpectations();
-        }
-
-        [TestMethod, ExpectedException(typeof(ArgumentException))]
-        public void Parse_InvalidSerializedTask_Exception()
-        {
-            // Arrange.
-            var task = "task";
-            var parser = MockRepository.GeneratePartialMock<TaskParser>();
-            parser
-                .Expect(p => p.IsSerializedTask(task))
-                .Return(false);
-
-            // Act and assert.
-            parser.Parse(task);
+            Assert.AreEqual(expectedStatus, res.Status);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]

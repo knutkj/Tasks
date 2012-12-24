@@ -34,26 +34,24 @@ namespace Kkj.Tasks
             {
                 throw new ArgumentException("serializedTask");
             }
-            if (!IsSerializedTask(serializedTask))
+            var tokens = GetTokens(serializedTask);
+            var status = ParseStatus(tokens.Item1);
+            return new ParserResult
             {
-                throw new ArgumentException(
-                    "Specified argument is not a serialized task.",
-                    "serializedTask"
-                );
-            }
-            return null;
+                Status = status
+            };
         }
 
         /// <summary>
-        /// Checks if the specified serialized task is valid.
+        /// Get the task tokens.
         /// </summary>
         /// <param name="serializedTask">
-        /// The serialized task to check.
+        /// A serialized task.
         /// </param>
         /// <returns>
-        /// True if valid serialized task or false.
+        /// The task tokens or <c>null</c> if not a task.
         /// </returns>
-        public virtual bool IsSerializedTask([CanBeNull] string serializedTask)
+        internal virtual Tuple<string> GetTokens(string serializedTask)
         {
             throw new NotImplementedException();
         }
