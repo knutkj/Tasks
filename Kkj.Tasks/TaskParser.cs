@@ -71,7 +71,6 @@ namespace Kkj.Tasks
             throw new NotImplementedException();
         }
 
-
         /// <summary>
         /// Parses the specified priority string and finds the related task
         /// priority.

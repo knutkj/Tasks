@@ -1,7 +1,9 @@
-﻿namespace Kkj.Tasks
+﻿using System;
+
+namespace Kkj.Tasks
 {
     public interface ITaskFactory
     {
-        Task Create(string serializedTask);
+        Task Create(DateTime date, string serializedTask);
     }
 }

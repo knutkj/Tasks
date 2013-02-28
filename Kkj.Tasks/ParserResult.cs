@@ -6,6 +6,11 @@
     public class ParserResult
     {
         /// <summary>
+        /// Get or set the task name.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
         /// Get or set the status.
         /// </summary>
         public TaskStatus Status { get; set; }
