@@ -33,7 +33,7 @@ namespace Kkj.Tasks
         /// <exception cref="ArgumenNullException">
         /// If <c>taskParser</c> is <c>null</c>.
         /// </exception>
-        public TaskFactory(
+        internal TaskFactory(
             ITaskParser taskParser,
             ITaskStore taskStore
         )
@@ -52,7 +52,18 @@ namespace Kkj.Tasks
 
         public Task Create(DateTime date, string serializedTask)
         {
-            return Store.Tasks[Parser.Parse(serializedTask).Name];
+            var parserResult = Parser.Parse(serializedTask);
+            var task = New(new DateTime(), parserResult);
+            return Store.Save(task);
+        }
+
+        internal virtual Task New(DateTime date, ParserResult parserResult)
+        {
+            return new Task(parserResult.Name, date)
+            {
+                Status = parserResult.Status,
+                Priority = parserResult.Priority
+            };
         }
     }
 }

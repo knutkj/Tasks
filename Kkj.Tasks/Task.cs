@@ -7,20 +7,41 @@ namespace Kkj.Tasks
     /// <summary>
     /// Represents a task.
     /// </summary>
-    public class Task
+    public class Task : TaskVersion
     {
         /// <summary>
-        /// Get or set the task status.
+        /// Initializes a new task version with the specified task name and
+        /// date.
         /// </summary>
-        public TaskStatus Status { get; set; }
+        /// <param name="name">
+        /// The task name.
+        /// </param>
+        /// <param name="date">
+        /// The date of the task.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// If <c>name</c> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// If <c>date</c> is <c>null</c>.
+        /// </exception>
+        public Task(string name, DateTime date)
+            : base(name, date)
+        { }
 
         /// <summary>
-        /// Get the tags that has been applied to this task.
+        /// Get or set the task name.
+        /// </summary>
+        public override string Name
+        {
+            get { return _name; }
+            set { throw new NotImplementedException(); }
+        }
+
+        /// <summary>
+        /// Get the task versions.
         /// </summary>
         [NotNull]
-        public IEnumerable<Tag> Tags
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public IEnumerable<TaskVersion> Versions { get; internal set; }
     }
 }

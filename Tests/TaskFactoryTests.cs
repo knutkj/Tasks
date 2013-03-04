@@ -53,22 +53,22 @@ namespace Tests
             var date = new DateTime();
             const string serializedTask = "serialized task";
             const string taskName = "task name";
-            var task = new Task();
+            var parserResult = new ParserResult { Name = taskName };
+            var task = new Task(taskName, date);
             var parser = MockRepository.GenerateStrictMock<ITaskParser>();
             var store = MockRepository.GenerateStrictMock<ITaskStore>();
-            var dictionary =
-                MockRepository.GenerateStrictMock<IDictionary<string, Task>>();
 
-            var factory = new TaskFactory(parser, store);
+            var factory =
+                MockRepository.GeneratePartialMock<TaskFactory>(parser, store);
 
             parser
                 .Expect(p => p.Parse(serializedTask))
-                .Return(new ParserResult { Name = taskName });
+                .Return(parserResult);
+            factory
+                .Expect(f => f.New(date, parserResult))
+                .Return(task);
             store
-                .Expect(s => s.Tasks)
-                .Return(dictionary);
-            dictionary
-                .Expect(d => d[taskName])
+                .Expect(s => s.Save(task))
                 .Return(task);
 
             // Act.
@@ -76,9 +76,38 @@ namespace Tests
 
             // Assert.
             parser.VerifyAllExpectations();
+            factory.VerifyAllExpectations();
             store.VerifyAllExpectations();
-            dictionary.VerifyAllExpectations();
             Assert.AreEqual(task, res);
+        }
+
+        [TestMethod]
+        public void NewBasedOnParserResult()
+        {
+            // Arrange.
+            var date = new DateTime();
+            const string name = "Task name";
+            const TaskStatus status = TaskStatus.Done;
+            const TaskPriority priority = TaskPriority.Normal;
+            var parserResult = new ParserResult
+            {
+                Name = name,
+                Status = status,
+                Priority = priority
+            };
+
+            var factory = new TaskFactory(
+                MockRepository.GenerateStrictMock<ITaskParser>(),
+                MockRepository.GenerateStrictMock<ITaskStore>()
+            );
+
+            // Act.
+            var res = factory.New(date, parserResult);
+
+            // Assert.
+            Assert.AreEqual(name, res.Name);
+            Assert.AreEqual(priority, res.Priority);
+            Assert.AreEqual(priority, res.Priority);
         }
     }
 }
