@@ -50,7 +50,7 @@ namespace Tests
         public void CreateDelegates()
         {
             // Arrange.
-            var date = new DateTime();
+            var date = new DateTime(2000, 1, 1);
             const string serializedTask = "serialized task";
             const string taskName = "task name";
             var parserResult = new ParserResult { Name = taskName };
@@ -125,6 +125,34 @@ namespace Tests
             // Assert.
             Assert.AreEqual(priority, res.Priority);
             Assert.AreEqual(priority, res.Priority);
+        }
+
+        [TestMethod]
+        public void CurrentStore()
+        {
+            // Arrange.
+
+            // Act.
+            var store = TaskFactory.CurrentStore;
+
+            // Assert.
+            Assert.IsInstanceOfType(store, typeof(MemoryTaskStore));
+        }
+
+        [TestMethod]
+        public void CurrentFactory()
+        {
+            // Arrange.
+
+            // Act.
+            var factory = TaskFactory.CurrentFactory;
+
+            // Assert.
+            Assert.IsInstanceOfType(factory, typeof(TaskFactory));
+            Assert.AreEqual(
+                TaskFactory.CurrentStore,
+                ((TaskFactory)factory).Store
+            );
         }
     }
 }

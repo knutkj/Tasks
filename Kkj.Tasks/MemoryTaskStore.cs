@@ -113,5 +113,10 @@ namespace Kkj.Tasks
         {
             return new Task(name) { Versions = versions.Select(p => p.Value) };
         }
+
+        /// <summary>
+        /// Clears all the task in the task store.
+        /// </summary>
+        public void Clear() { TaskVersions.Clear(); }
     }
 }

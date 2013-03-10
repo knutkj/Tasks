@@ -49,11 +49,12 @@ namespace Kkj.Tasks
             }
             var priority = ParsePriority(tokens.Item1);
             var status = ParseStatus(tokens.Item2);
+            var name = ParseName(tokens.Item3);
             return new ParserResult
             {
                 Priority = priority,
                 Status = status,
-                Name = tokens.Item3
+                Name = name
             };
         }
 
@@ -153,6 +154,25 @@ namespace Kkj.Tasks
                 "Invalid status.",
                 "statusString"
             );
+        }
+
+        /// <summary>
+        /// Parses the specified name string and finds the related task name.
+        /// </summary>
+        /// <param name="nameString">
+        /// The name string to parse.
+        /// </param>
+        /// <returns>
+        /// The task name.
+        /// </returns>
+        [NotNull]
+        internal virtual string ParseName([NotNull] string nameString)
+        {
+            if (nameString == null)
+            {
+                throw new ArgumentNullException("nameString");
+            }
+            return nameString.Trim();
         }
     }
 }

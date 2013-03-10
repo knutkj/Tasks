@@ -168,5 +168,19 @@ namespace Tests
             Assert.AreEqual(1, res.Count());
             Assert.AreEqual(task, res.First());
         }
+
+        [TestMethod]
+        public void ClearDelegate()
+        {
+            // Arrange.
+            var store = MockRepository.GeneratePartialMock<MemoryTaskStore>();
+            store.Expect(s => s.TaskVersions.Clear());
+
+            // Act.
+            store.Clear();
+
+            // Assert.
+            store.VerifyAllExpectations();
+        }
     }
 }

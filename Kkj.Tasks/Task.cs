@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Kkj.Tasks
 {
@@ -37,6 +38,30 @@ namespace Kkj.Tasks
         }
 
         /// <summary>
+        /// Get the date.
+        /// </summary>
+        public DateTime Date
+        {
+            get { return Versions.Last().Date; }
+        }
+
+        /// <summary>
+        /// Get the priority.
+        /// </summary>
+        public TaskPriority Priority
+        {
+            get { return Versions.Last().Priority; }
+        }
+
+        /// <summary>
+        /// Get the status.
+        /// </summary>
+        public TaskStatus Status
+        {
+            get { return Versions.Last().Status; }
+        }
+
+        /// <summary>
         /// Get or set the task name.
         /// </summary>
         public string Name
@@ -49,6 +74,6 @@ namespace Kkj.Tasks
         /// Get the task versions.
         /// </summary>
         [NotNull]
-        public IEnumerable<TaskVersion> Versions { get; internal set; }
+        public virtual IEnumerable<TaskVersion> Versions { get; internal set; }
     }
 }

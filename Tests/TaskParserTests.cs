@@ -81,15 +81,16 @@ namespace Tests
         {
             // Arrange.
             const string task = "task";
-            const string expectedName = "name";
+            
             var tokens = Tuple.Create<string, string, string>(
                 "priority",
                 "status",
-                expectedName
+                "name"
             );
 
             var expectedPriority = TaskPriority.High;
             var expectedStatus = TaskStatus.Done;
+            const string expectedName = "name";
 
             var parser = MockRepository.GeneratePartialMock<TaskParser>();
             parser
@@ -101,6 +102,9 @@ namespace Tests
             parser
                 .Expect(p => p.ParseStatus(tokens.Item2))
                 .Return(expectedStatus);
+            parser
+                .Expect(p => p.ParseName(tokens.Item3))
+                .Return(expectedName);
 
             // Act.
             var res = parser.Parse(task);
@@ -204,6 +208,46 @@ namespace Tests
 
             // Assert.
             Assert.IsNull(tokens);
+        }
+
+        [TestMethod]
+        public void ParseNameReturnsVanillaName()
+        {
+            // Arrange.
+            const string expectedName = "name";
+            var parser = new TaskParser();
+
+            // Act.
+            var name = parser.ParseName(expectedName);
+
+            // Assert.
+            Assert.AreEqual(expectedName, name);
+        }
+
+        [TestMethod]
+        public void ParseNameReturnsTrimmedName()
+        {
+            // Arrange.
+            const string nameString = " name ";
+            var expectedName = nameString.Trim();
+            var parser = new TaskParser();
+
+            // Act.
+            var name = parser.ParseName(nameString);
+
+            // Assert.
+            Assert.AreEqual(expectedName, name);
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void ParseNameNullException()
+        {
+            // Arrange.
+            const string nameString = null;
+            var parser = new TaskParser();
+
+            // Act and assert.
+            var name = parser.ParseName(nameString);
         }
     }
 }

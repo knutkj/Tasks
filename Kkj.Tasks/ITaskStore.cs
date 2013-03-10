@@ -37,5 +37,10 @@ namespace Kkj.Tasks
         /// </exception>
         [NotNull]
         Task Save([NotNull] string taskName, [NotNull] TaskVersion taskVersion);
+
+        /// <summary>
+        /// Clears all the task in the task store.
+        /// </summary>
+        void Clear();
     }
 }

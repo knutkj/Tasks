@@ -8,6 +8,17 @@ namespace Kkj.Tasks
     /// </summary>
     public class TaskFactory : ITaskFactory
     {
+        /// <summary>
+        /// Get or set the current <see cref="ITaskStore"/>.
+        /// </summary>
+        public static ITaskStore CurrentStore = new MemoryTaskStore();
+
+        /// <summary>
+        /// Get or set the current <see cref="ITaskFactory"/>.
+        /// </summary>
+        public static ITaskFactory CurrentFactory =
+            new TaskFactory(new TaskParser(), CurrentStore);
+
         private readonly ITaskParser _taskParser;
         private readonly ITaskStore _taskStore;
 
@@ -30,7 +41,7 @@ namespace Kkj.Tasks
         /// <exception cref="ArgumenNullException">
         /// If <c>taskParser</c> is <c>null</c>.
         /// </exception>
-        internal TaskFactory(
+        public TaskFactory(
             ITaskParser taskParser,
             ITaskStore taskStore
         )
@@ -54,7 +65,7 @@ namespace Kkj.Tasks
             {
                 return null;
             }
-            var taskVersion = New(new DateTime(), parserResult);
+            var taskVersion = New(date, parserResult);
             return Store.Save(parserResult.Name, taskVersion);
         }
 
