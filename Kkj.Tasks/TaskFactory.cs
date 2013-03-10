@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JetBrains.Annotations;
+using System;
 
 namespace Kkj.Tasks
 {
@@ -53,13 +50,30 @@ namespace Kkj.Tasks
         public Task Create(DateTime date, string serializedTask)
         {
             var parserResult = Parser.Parse(serializedTask);
-            var task = New(new DateTime(), parserResult);
-            return Store.Save(task);
+            var taskVersion = New(new DateTime(), parserResult);
+            return Store.Save(parserResult.Name, taskVersion);
         }
 
-        internal virtual Task New(DateTime date, ParserResult parserResult)
+        /// <summary>
+        /// Initializes a new <see cref="TaskVersion"/> with the specified date
+        /// and values from the specified parser result.
+        /// </summary>
+        /// <param name="date">
+        /// The date of the task version.
+        /// </param>
+        /// <param name="parserResult">
+        /// The parser result.
+        /// </param>
+        /// <returns>
+        /// The new task version.
+        /// </returns>
+        [NotNull]
+        internal virtual TaskVersion New(
+            DateTime date, 
+            ParserResult parserResult
+        )
         {
-            return new Task(parserResult.Name, date)
+            return new TaskVersion(date)
             {
                 Status = parserResult.Status,
                 Priority = parserResult.Priority

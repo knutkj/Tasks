@@ -7,32 +7,39 @@ namespace Kkj.Tasks
     /// <summary>
     /// Represents a task.
     /// </summary>
-    public class Task : TaskVersion
+    public class Task
     {
+        private string _name;
+
         /// <summary>
-        /// Initializes a new task version with the specified task name and
-        /// date.
+        /// Initializes a new task with the specified task name.
         /// </summary>
         /// <param name="name">
         /// The task name.
         /// </param>
-        /// <param name="date">
-        /// The date of the task.
-        /// </param>
         /// <exception cref="ArgumentNullException">
         /// If <c>name</c> is <c>null</c>.
         /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// If <c>date</c> is <c>null</c>.
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// If <c>name</c> is white space.
         /// </exception>
-        public Task(string name, DateTime date)
-            : base(name, date)
-        { }
+        public Task(string name)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentOutOfRangeException("name");
+            }
+            _name = name;
+        }
 
         /// <summary>
         /// Get or set the task name.
         /// </summary>
-        public override string Name
+        public string Name
         {
             get { return _name; }
             set { throw new NotImplementedException(); }

@@ -12,10 +12,9 @@ namespace Tests
         {
             // Arrange.
             const string name = null;
-            var date = new DateTime();
 
             // Act and assert.
-            new Task(name, date);
+            new Task(name);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentOutOfRangeException))]
@@ -23,10 +22,9 @@ namespace Tests
         {
             // Arrange.
             const string name = " ";
-            var date = new DateTime();
 
             // Act and assert.
-            new Task(name, date);
+            new Task(name);
         }
 
         [TestMethod]
@@ -34,7 +32,7 @@ namespace Tests
         {
             // Arrange.
             const string name = "task name";
-            var task = new Task(name, new DateTime());
+            var task = new Task(name);
 
             // Act.
             var res = task.Name;

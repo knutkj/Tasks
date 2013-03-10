@@ -54,7 +54,8 @@ namespace Tests
             const string serializedTask = "serialized task";
             const string taskName = "task name";
             var parserResult = new ParserResult { Name = taskName };
-            var task = new Task(taskName, date);
+            var taskVersion = new TaskVersion(date);
+            var task = new Task(taskName);
             var parser = MockRepository.GenerateStrictMock<ITaskParser>();
             var store = MockRepository.GenerateStrictMock<ITaskStore>();
 
@@ -66,9 +67,9 @@ namespace Tests
                 .Return(parserResult);
             factory
                 .Expect(f => f.New(date, parserResult))
-                .Return(task);
+                .Return(taskVersion);
             store
-                .Expect(s => s.Save(task))
+                .Expect(s => s.Save(taskName, taskVersion))
                 .Return(task);
 
             // Act.
@@ -105,7 +106,6 @@ namespace Tests
             var res = factory.New(date, parserResult);
 
             // Assert.
-            Assert.AreEqual(name, res.Name);
             Assert.AreEqual(priority, res.Priority);
             Assert.AreEqual(priority, res.Priority);
         }

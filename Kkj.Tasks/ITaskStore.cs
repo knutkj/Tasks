@@ -6,14 +6,17 @@
     public interface ITaskStore
     {
         /// <summary>
-        /// Saves and updates the specified task.
+        /// Saves the specified task version.
         /// </summary>
-        /// <param name="task">
-        /// The task to save.
+        /// <param name="taskName">
+        /// The name of the task that this task version belongs to.
+        /// </param>
+        /// <param name="taskVersion">
+        /// The task version to save.
         /// </param>
         /// <returns>
-        /// The same but updated task.
+        /// The task with the specified name.
         /// </returns>
-        Task Save(Task task);
+        Task Save(string taskName, TaskVersion taskVersion);
     }
 }

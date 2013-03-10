@@ -4,40 +4,25 @@ using System.Collections.Generic;
 
 namespace Kkj.Tasks
 {
-    public abstract class TaskVersion
+    public class TaskVersion
     {
-        protected string _name;
+        private readonly DateTime _date;
 
         /// <summary>
-        /// Initializes a new task version with the specified task name and
-        /// date.
+        /// Initializes a new task version with the specified date.
         /// </summary>
-        /// <param name="name">
-        /// The task name.
-        /// </param>
         /// <param name="date">
         /// The date of the task.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// If <c>name</c> is <c>null</c>.
-        /// </exception>
-        public TaskVersion(string name, DateTime date)
+        public TaskVersion(DateTime date)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentOutOfRangeException("name");
-            }
-            _name = name;
+            _date = date;
         }
 
         /// <summary>
-        /// Get or set the name.
+        /// Get the date.
         /// </summary>
-        public abstract string Name { get; set; }
+        public DateTime Date { get { return _date; } }
 
         /// <summary>
         /// Get or set the status.
