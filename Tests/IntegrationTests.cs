@@ -1,7 +1,7 @@
 ﻿using Kkj.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Rhino.Mocks;
 using System;
+using System.Linq;
 
 namespace Tests
 {
@@ -9,20 +9,39 @@ namespace Tests
     public class IntegrationTests
     {
         [TestMethod]
-        public void Test1()
+        public void ValidTaskParsed()
         {
             // Arrange.
-            var date = new DateTime(2000, 1, 1);
-            const string serializedTask = "[ ] Task #1";
+            const string taskName = "Task #1";
+            const string serializedTask = "[ ] " + taskName;
             var parser = new TaskParser();
-            var store = MockRepository.GenerateStub<ITaskStore>();
+            var store = new MemoryTaskStore();
             var factory = new TaskFactory(parser, store);
 
             // Act.
-            var task = factory.Create(date, serializedTask);
+            var task = factory.Create(new DateTime(), serializedTask);
 
             // Assert.
+            Assert.IsNotNull(task);
+            var tasks = store.Tasks;
+            Assert.AreEqual(1, tasks.Count());
+            Assert.AreEqual(taskName, tasks.First().Name);
+        }
 
+        [TestMethod]
+        public void InvalidTaskParsed()
+        {
+            // Arrange.
+            const string serializedTask = "";
+            var parser = new TaskParser();
+            var store = new MemoryTaskStore();
+            var factory = new TaskFactory(parser, store);
+
+            // Act.
+            var task = factory.Create(new DateTime(), serializedTask);
+
+            // Assert.
+            Assert.IsNull(task);
         }
     }
 }

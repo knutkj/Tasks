@@ -1,10 +1,19 @@
-﻿namespace Kkj.Tasks
+﻿using JetBrains.Annotations;
+using System;
+using System.Collections.Generic;
+
+namespace Kkj.Tasks
 {
     /// <summary>
     /// Represents a store for tasks.
     /// </summary>
     public interface ITaskStore
     {
+        /// <summary>
+        /// Get all tasks.
+        /// </summary>
+        IEnumerable<Task> Tasks { get; }
+
         /// <summary>
         /// Saves the specified task version.
         /// </summary>
@@ -17,6 +26,16 @@
         /// <returns>
         /// The task with the specified name.
         /// </returns>
-        Task Save(string taskName, TaskVersion taskVersion);
+        /// <exception cref="ArgumentNullException">
+        /// If <c>taskName</c> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// If <c>taskName</c> is white space.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// If <c>taskVersion</c> is <c>null</c>.
+        /// </exception>
+        [NotNull]
+        Task Save([NotNull] string taskName, [NotNull] TaskVersion taskVersion);
     }
 }

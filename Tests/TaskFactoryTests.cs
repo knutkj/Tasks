@@ -83,6 +83,23 @@ namespace Tests
         }
 
         [TestMethod]
+        public void CreateUnableToParseNull()
+        {
+            // Arrange.
+            const string serializedTask = "serialized task";
+            var parser = MockRepository.GenerateStrictMock<ITaskParser>();
+            var store = MockRepository.GenerateStrictMock<ITaskStore>();
+            var factory = new TaskFactory(parser, store);
+            parser.Expect(p => p.Parse(serializedTask)).Return(null);
+
+            // Act.
+            var res = factory.Create(new DateTime(), serializedTask);
+
+            // Assert.
+            Assert.IsNull(res);
+        }
+
+        [TestMethod]
         public void NewBasedOnParserResult()
         {
             // Arrange.

@@ -8,6 +8,12 @@ namespace Tests
     [TestClass]
     public class TaskParserTests
     {
+        private const string TaskPri = "!";
+        private const string TaskStat = "X";
+        private const string TaskName = "Name";
+        private const string ValidSimpleSerializedTask =
+            TaskPri + "[" + TaskStat + "]" + TaskName;
+
         [TestMethod]
         public void Pattern_Works()
         {
@@ -74,8 +80,13 @@ namespace Tests
         public void Parse_Delegates()
         {
             // Arrange.
-            var task = "task";
-            var tokens = Tuple.Create<string, string>("priority", "status");
+            const string task = "task";
+            const string expectedName = "name";
+            var tokens = Tuple.Create<string, string, string>(
+                "priority",
+                "status",
+                expectedName
+            );
 
             var expectedPriority = TaskPriority.High;
             var expectedStatus = TaskStatus.Done;
@@ -98,6 +109,7 @@ namespace Tests
             parser.VerifyAllExpectations();
             Assert.AreEqual(expectedPriority, res.Priority);
             Assert.AreEqual(expectedStatus, res.Status);
+            Assert.AreEqual(expectedName, res.Name);
         }
 
         [TestMethod]
@@ -164,6 +176,34 @@ namespace Tests
 
             var status2 = new TaskParser().ParseStatus("X");
             Assert.AreEqual(status2, TaskStatus.Done);
+        }
+
+        [TestMethod]
+        public void GetTokensMatchReturnsTokens()
+        {
+            // Arrange.
+            var parser = new TaskParser();
+
+            // Act.
+            var tokens = parser.GetTokens(ValidSimpleSerializedTask);
+
+            // Assert.
+            Assert.AreEqual(TaskPri, tokens.Item1);
+            Assert.AreEqual(TaskStat, tokens.Item2);
+            Assert.AreEqual(TaskName, tokens.Item3);
+        }
+
+        [TestMethod]
+        public void GetTokensNotMatchReturnsNull()
+        {
+            // Arrange.
+            var parser = new TaskParser();
+
+            // Act.
+            var tokens = parser.GetTokens("");
+
+            // Assert.
+            Assert.IsNull(tokens);
         }
     }
 }

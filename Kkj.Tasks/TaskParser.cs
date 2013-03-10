@@ -17,7 +17,8 @@ namespace Kkj.Tasks
             new Regex(@"^\s*([!?])?\s*\[([ X])\]\s*([^{]+)(?:{\s*([^}]+)})?$");
 
         /// <summary>
-        /// Initializes a new Task based on the serialized task.
+        /// Initializes a new <see cref="ParserResult"/> based on the
+        /// serialized task.
         /// </summary>
         /// <remarks>
         /// Only one serialized task must be provided.
@@ -31,7 +32,6 @@ namespace Kkj.Tasks
         /// <exception cref="ArgumentNullException">
         /// If serializedTask is <c>null</c>.
         /// </exception>
-        [CanBeNull]
         public ParserResult Parse([NotNull] string serializedTask)
         {
             if (serializedTask == null)
@@ -52,7 +52,8 @@ namespace Kkj.Tasks
             return new ParserResult
             {
                 Priority = priority,
-                Status = status
+                Status = status,
+                Name = tokens.Item3
             };
         }
 
@@ -65,10 +66,19 @@ namespace Kkj.Tasks
         /// <returns>
         /// The task tokens or <c>null</c> if not a task.
         /// </returns>
+        // Atm: <priority, status, name>
         [CanBeNull]
-        internal virtual Tuple<string, string> GetTokens(string serializedTask)
+        internal virtual Tuple<string, string, string>
+            GetTokens(string serializedTask)
         {
-            throw new NotImplementedException();
+            var matches = SingleLinePattern.Match(serializedTask);
+            return matches.Success ?
+                new Tuple<string, string, string>(
+                    matches.Groups[1].Value,
+                    matches.Groups[2].Value,
+                    matches.Groups[3].Value
+                ) :
+                null;
         }
 
         /// <summary>

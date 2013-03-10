@@ -50,6 +50,10 @@ namespace Kkj.Tasks
         public Task Create(DateTime date, string serializedTask)
         {
             var parserResult = Parser.Parse(serializedTask);
+            if (parserResult == null)
+            {
+                return null;
+            }
             var taskVersion = New(new DateTime(), parserResult);
             return Store.Save(parserResult.Name, taskVersion);
         }
