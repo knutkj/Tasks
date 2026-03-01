@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace Kkj.Tasks
+﻿namespace Kkj.Tasks
 {
     public interface ITaskFactory
     {
-        Task Create(DateTime date, string serializedTask);
+        Task? Create(DateTime date, string serializedTask);
     }
 }

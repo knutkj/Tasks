@@ -1,6 +1,4 @@
-﻿using JetBrains.Annotations;
-
-namespace Kkj.Tasks
+﻿namespace Kkj.Tasks
 {
     public interface ITaskParser
     {
@@ -20,7 +18,6 @@ namespace Kkj.Tasks
         /// <exception cref="ArgumentNullException">
         /// If serializedTask is <c>null</c>.
         /// </exception>
-        [CanBeNull]
-        ParserResult Parse(string serializedTask);
+        ParserResult? Parse(string serializedTask);
     }
 }

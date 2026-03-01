@@ -1,7 +1,4 @@
-﻿using JetBrains.Annotations;
-using System;
-
-namespace Kkj.Tasks
+﻿namespace Kkj.Tasks
 {
     /// <summary>
     /// Represents a factory that creates tasks.
@@ -58,7 +55,7 @@ namespace Kkj.Tasks
             _taskStore = taskStore;
         }
 
-        public Task Create(DateTime date, string serializedTask)
+        public Task? Create(DateTime date, string serializedTask)
         {
             var parserResult = Parser.Parse(serializedTask);
             if (parserResult == null)
@@ -82,7 +79,6 @@ namespace Kkj.Tasks
         /// <returns>
         /// The new task version.
         /// </returns>
-        [NotNull]
         internal virtual TaskVersion New(
             DateTime date, 
             ParserResult parserResult

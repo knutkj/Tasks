@@ -1,6 +1,4 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Kkj.Tasks
 {
@@ -32,7 +30,7 @@ namespace Kkj.Tasks
         /// <exception cref="ArgumentNullException">
         /// If serializedTask is <c>null</c>.
         /// </exception>
-        public ParserResult Parse([NotNull] string serializedTask)
+        public ParserResult? Parse(string serializedTask)
         {
             if (serializedTask == null)
             {
@@ -68,8 +66,7 @@ namespace Kkj.Tasks
         /// The task tokens or <c>null</c> if not a task.
         /// </returns>
         // Atm: <priority, status, name>
-        [CanBeNull]
-        internal virtual Tuple<string, string, string>
+        internal virtual Tuple<string, string, string>?
             GetTokens(string serializedTask)
         {
             var matches = SingleLinePattern.Match(serializedTask);
@@ -99,7 +96,7 @@ namespace Kkj.Tasks
         /// If not able to parse priorityString.
         /// </exception>
         internal virtual TaskPriority ParsePriority(
-            [NotNull] string priorityString
+            string priorityString
         )
         {
             if (priorityString == null)
@@ -137,7 +134,7 @@ namespace Kkj.Tasks
         /// <exception cref="ArgumentException">
         /// If not able to parse statuString.
         /// </exception>
-        internal virtual TaskStatus ParseStatus([NotNull] string statusString)
+        internal virtual TaskStatus ParseStatus(string statusString)
         {
             if (statusString == null)
             {
@@ -165,8 +162,7 @@ namespace Kkj.Tasks
         /// <returns>
         /// The task name.
         /// </returns>
-        [NotNull]
-        internal virtual string ParseName([NotNull] string nameString)
+        internal virtual string ParseName(string nameString)
         {
             if (nameString == null)
             {

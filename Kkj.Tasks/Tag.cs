@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Kkj.Tasks
+﻿namespace Kkj.Tasks
 {
     /// <summary>
     /// Represents a task tag.
@@ -10,11 +8,11 @@ namespace Kkj.Tasks
         /// <summary>
         /// Get or set the tag name.
         /// </summary>
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         /// <summary>
         /// Get or set the tasks that has this tag applied.
         /// </summary>
-        public IEnumerable<Task> Tasks { get; set; }
+        public IEnumerable<Task> Tasks { get; set; } = [];
     }
 }

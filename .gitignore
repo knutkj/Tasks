@@ -12,3 +12,4 @@ TestResults
 *.suo
 *.user
 *.sln.docstates
+tmp/

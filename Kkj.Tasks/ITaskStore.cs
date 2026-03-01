@@ -1,8 +1,4 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Collections.Generic;
-
-namespace Kkj.Tasks
+﻿namespace Kkj.Tasks
 {
     /// <summary>
     /// Represents a store for tasks.
@@ -35,8 +31,7 @@ namespace Kkj.Tasks
         /// <exception cref="ArgumentNullException">
         /// If <c>taskVersion</c> is <c>null</c>.
         /// </exception>
-        [NotNull]
-        Task Save([NotNull] string taskName, [NotNull] TaskVersion taskVersion);
+        Task Save(string taskName, TaskVersion taskVersion);
 
         /// <summary>
         /// Clears all the task in the task store.

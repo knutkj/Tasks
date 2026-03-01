@@ -1,16 +1,10 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Kkj.Tasks
+﻿namespace Kkj.Tasks
 {
     /// <summary>
     /// A task store that stores the tasks in memory.
     /// </summary>
     public class MemoryTaskStore : ITaskStore
     {
-        [NotNull]
         private readonly IDictionary<
             string, SortedDictionary<DateTime, TaskVersion>
         > _taskVersions;
@@ -29,7 +23,6 @@ namespace Kkj.Tasks
         /// <summary>
         /// Get the stored tasks.
         /// </summary>
-        [NotNull]
         internal virtual
             IDictionary<string, SortedDictionary<DateTime, TaskVersion>>
             TaskVersions
@@ -86,9 +79,8 @@ namespace Kkj.Tasks
         /// <returns>
         /// The existing version dictionary or a created one.
         /// </returns>
-        [NotNull]
         internal virtual SortedDictionary<DateTime, TaskVersion>
-            GetVersions([NotNull] string taskName)
+            GetVersions(string taskName)
         {
             return TaskVersions.ContainsKey(taskName) ?
                 TaskVersions[taskName] :
@@ -105,10 +97,9 @@ namespace Kkj.Tasks
         /// <returns>
         /// The initialized task.
         /// </returns>
-        [NotNull]
         internal virtual Task New(
-            [NotNull] string name,
-            [NotNull] SortedDictionary<DateTime, TaskVersion> versions
+            string name,
+            SortedDictionary<DateTime, TaskVersion> versions
         )
         {
             return new Task(name) { Versions = versions.Select(p => p.Value) };

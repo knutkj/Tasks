@@ -8,7 +8,7 @@
         /// <summary>
         /// Get or set the task name.
         /// </summary>
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         /// <summary>
         /// Get or set the status.
