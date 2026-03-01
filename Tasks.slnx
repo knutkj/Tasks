@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Kkj.Tasks/Kkj.Tasks.csproj" />
+  <Project Path="Tests/Tests.csproj" />
+</Solution>

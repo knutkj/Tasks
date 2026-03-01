@@ -1,23 +1,20 @@
-﻿using Kkj.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using Kkj.Tasks;
 
-namespace Tests
+namespace Tests;
+
+[TestClass]
+public class TaskVersionTests
 {
-    [TestClass]
-    public class TaskVersionTests
+    [TestMethod]
+    public void CtorSavesDateRef()
     {
-        [TestMethod]
-        public void CtorSavesDateRef()
-        {
-            // Arrange.
-            var date = new DateTime(2000, 1, 1);
+        // Arrange.
+        var date = new DateTime(2000, 1, 1);
 
-            // Act.
-            var version = new TaskVersion(date);
+        // Act.
+        var version = new TaskVersion(date);
 
-            // Assert.
-            Assert.AreEqual(date, version.Date);
-        }
+        // Assert.
+        Assert.AreEqual(date, version.Date);
     }
 }

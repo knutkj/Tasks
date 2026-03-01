@@ -1,8 +1,4 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Collections.Generic;
-
-namespace Kkj.Tasks
+﻿namespace Kkj.Tasks
 {
     public class TaskVersion
     {
@@ -37,7 +33,6 @@ namespace Kkj.Tasks
         /// <summary>
         /// Get the tags that has been applied.
         /// </summary>
-        [NotNull]
         public virtual IEnumerable<Tag> Tags
         {
             get { throw new NotImplementedException(); }

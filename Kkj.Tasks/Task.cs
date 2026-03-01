@@ -1,9 +1,4 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Kkj.Tasks
+﻿namespace Kkj.Tasks
 {
     /// <summary>
     /// Represents a task.
@@ -73,7 +68,6 @@ namespace Kkj.Tasks
         /// <summary>
         /// Get the task versions.
         /// </summary>
-        [NotNull]
-        public virtual IEnumerable<TaskVersion> Versions { get; internal set; }
+        public virtual IEnumerable<TaskVersion> Versions { get; internal set; } = [];
     }
 }
